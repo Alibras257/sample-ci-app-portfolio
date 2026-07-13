@@ -2,11 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * 0"
@@ -16,6 +14,7 @@ permissions:
 
 env:
   APP_ENV: production
+  IMAGE_NAME: sampleapp
 
 jobs:
   build:
@@ -26,42 +25,47 @@ jobs:
         NODE_VERSION: [18.x, 20.x]
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.NODE_VERSION }}
 
-      - name: Cache npm
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-${{ matrix.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
 
-      - name: Install Dependencies
-        run: npm install
+      - run: npm install
 
-      - name: Display Environment
-        run: echo "Running in $APP_ENV"
+      - run: echo "Environment = $APP_ENV"
 
-      - name: Verify DockerHub Secret
-        env:
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        run: |
-          if [ -z "$DOCKERHUB_TOKEN" ]; then
-            echo "DockerHub token missing"
-            exit 1
-          fi
-          echo "DockerHub token found"
+      - run: npm test
 
-      - name: Run Tests
-        run: npm test
-
-      - name: Upload Build Logs
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: build-logs
           path: .
           retention-days: 7
+
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sampleapp:${{ github.run_number }}
+
+      - name: Cleanup Docker
+        run: docker system prune -af
