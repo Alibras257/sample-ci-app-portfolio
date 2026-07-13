@@ -2,21 +2,18 @@
 
 ## Supported Versions
 
-The latest version of this project is actively maintained.
+Only the latest version is actively maintained.
 
-## Reporting a Vulnerability
+## Reporting Security Issues
 
-If you discover a security vulnerability:
+Please report vulnerabilities privately before public disclosure.
 
-1. Do not disclose it publicly.
-2. Report it privately to the project maintainer.
-3. Include reproduction steps and supporting evidence.
-4. Allow time for investigation before public disclosure.
+## Security Controls
 
-## Security Practices
-
-- GitHub Actions uses pinned major action versions.
-- Secrets are stored in GitHub Secrets.
-- Least-privilege workflow permissions are used.
-- Docker credentials are never hardcoded.
-- Dependabot is enabled for dependency updates.
+- GitHub Secrets
+- Docker Hub Access Token
+- Least Privilege Workflow Permissions
+- Dependency Updates via Dependabot
+- Version-Pinned GitHub Actions
+- Artifact Retention Policy
+- Workflow Summaries

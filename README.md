@@ -1,28 +1,52 @@
 # Sample CI App
 
-![CI Status](https://github.com/Alibras257/sample-ci-app/actions/workflows/ci.yml/badge.svg)
+[![CI Pipeline](https://github.com/Alibras257/sample-ci-app/actions/workflows/ci.yml/badge.svg)](https://github.com/Alibras257/sample-ci-app/actions/workflows/ci.yml)
 
-A sample Node.js application demonstrating a production-style GitHub Actions CI/CD pipeline.
+## Overview
+
+A production-ready GitHub Actions CI/CD demonstration project.
 
 ## Features
 
-- GitHub Actions CI/CD
-- Matrix testing
-- Docker image build and push
-- Artifact upload
-- Dependency caching
-- Scheduled and manual workflows
-- Reusable workflows
-- Dependabot updates
-- Security best practices
+- GitHub Actions CI
+- Matrix Builds
+- Docker Build & Push
+- Docker Hub Integration
+- Artifact Upload
+- Dependency Caching
+- Scheduled Workflows
+- Manual Workflow Dispatch
+- Reusable Workflows
+- Dependabot
+- Security Best Practices
 
 ## Workflow
 
+The pipeline automatically runs on:
+
 - Push to `main`
-- Pull requests
-- Manual execution
+- Pull Requests
+- Manual dispatch
 - Weekly scheduled execution
 
-## Docker
+## Docker Image
 
-Images are published automatically to Docker Hub after successful builds.
+Images are published automatically to Docker Hub after successful builds on the `main` branch.
+
+## Project Structure
+
+```text
+.
+├── .github
+│   ├── workflows
+│   └── dependabot.yml
+├── logs
+├── Dockerfile
+├── SECURITY.md
+├── WORKFLOW_GUIDE.md
+└── README.md
+```
+
+## Author
+
+Ibraheem Aloyinlapa

@@ -10,4 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - run: echo "Reusable workflow executed successfully."
+      - name: Repository Information
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Workflow executed successfully."
+
+      - name: Summary
+        run: |
+          echo "# Reusable Workflow" >> $GITHUB_STEP_SUMMARY
+          echo "Workflow executed successfully." >> $GITHUB_STEP_SUMMARY

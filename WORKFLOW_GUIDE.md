@@ -1,31 +1,29 @@
-# GitHub Actions Workflow Guide
+# Workflow Guide
 
-## Overview
+## Build
 
-This repository uses GitHub Actions to automate:
+Installs dependencies and executes automated tests.
 
-- Build
-- Testing
-- Docker image creation
-- Docker Hub publishing
+## Docker
 
-## Workflow Triggers
+Builds and pushes Docker images to Docker Hub after successful builds.
 
-- Push to main
-- Pull Requests
-- Manual workflow_dispatch
-- Weekly scheduled cron
+## Triggers
+
+- Push
+- Pull Request
+- Manual
+- Weekly Cron
+
+## Monitoring
+
+- Workflow Summary
+- Build Logs
+- Artifacts
 
 ## Maintenance
 
-- Review workflow runs regularly.
-- Keep GitHub Actions up to date.
-- Review Dependabot pull requests.
-- Remove stale artifacts.
-- Monitor Docker image builds.
-
-## Security
-
-- Secrets are managed through GitHub Secrets.
-- Workflow permissions follow least privilege.
-- Docker authentication uses repository secrets.
+- Review Dependabot PRs
+- Update GitHub Actions
+- Remove stale workflow runs
+- Monitor Docker Hub builds
