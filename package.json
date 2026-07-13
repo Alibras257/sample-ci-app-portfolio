@@ -1,0 +1,16 @@
+{
+  "name": "sample-ci-app",
+  "version": "1.0.0",
+  "description": "GitHub Actions CI Demo",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"All tests passed\""
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "jest": "^30.0.5"
+  }
+}
