@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "**"
   pull_request:
     branches:
       - main
@@ -25,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        NODE_VERSION: [20.x]
+        NODE_VERSION: [18.x, 20.x]
 
     steps:
       - name: Checkout repository
@@ -36,14 +34,27 @@ jobs:
         with:
           node-version: ${{ matrix.NODE_VERSION }}
 
-      - name: Cache node modules
+      - name: Cache npm
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-${{ matrix.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
+
+      - name: Display Environment
+        run: echo "Running in $APP_ENV"
+
+      - name: Verify DockerHub Secret
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          if [ -z "$DOCKERHUB_TOKEN" ]; then
+            echo "DockerHub token missing"
+            exit 1
+          fi
+          echo "DockerHub token found"
 
       - name: Run Tests
         run: npm test
