@@ -4,11 +4,10 @@ on:
   workflow_call:
 
 jobs:
-  reusable-job:
+  reusable:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Display Message
-        run: echo "Reusable workflow executed successfully."
+      - run: echo "Reusable workflow executed successfully."
